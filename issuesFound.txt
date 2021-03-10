@@ -1,0 +1,67 @@
+# MAJORSSSS
+
+* Total SUpply is Different Than Initial Supply sent to the owner at the time of deployment
+* Mint Function doesn't increase the total Supply of the token
+
+* Contract locking ether found in :
+	Contract TreesFinance (treesFinance.sol#90-220) has payable functions:
+	 - TreesFinance.constructor() (treesFinance.sol#103-106)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+* CHeck CEIL FUnction - Multiplicatoin before division
+
+* For loop over dynamic array
+
+* CEIL from SafeMath is never used throughout the contract
+
+* Zero Address Check Missing on multiTransfer() function - Line 144
+* Zero Amount Value check on multiTransfer() function - Line 144
+
+* Tokens NEVER bURN While Transfer Function
+
+* Tax is applicable for Owner As well.
+
+---------------------------------------------------------
+# Minorssss
+* Hardcoded Address ISsue
+* TreesFinance.basePercent (treesFinance.sol#100) should be constant
+* Implicit Visibility needs to be checked once
+* TOO MANY DIGITS ISSUE 
+TreesFinance.constructor() (treesFinance.sol#103-106) uses literals with too many digits:
+	- mint(msg.sender,3000000000000000000000) (treesFinance.sol#105)
+TreesFinance.slitherConstructorVariables() (treesFinance.sol#90-220) uses literals with too many digits:
+	- _totalSupply = 5000000000000000000000 (treesFinance.sol#99)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+
+* No ERROR MESSAGES IN REQUIRE STATEMENTS
+
+* Functions that should be marked external
+name() should be declared external:
+	- ERC20Detailed.name() (treesFinance.sol#76-78)
+symbol() should be declared external:
+	- ERC20Detailed.symbol() (treesFinance.sol#80-82)
+decimals() should be declared external:
+	- ERC20Detailed.decimals() (treesFinance.sol#85-87)
+totalSupply() should be declared external:
+	- TreesFinance.totalSupply() (treesFinance.sol#108-110)
+balanceOf(address) should be declared external:
+	- TreesFinance.balanceOf(address) (treesFinance.sol#112-114)
+allowance(address,address) should be declared external:
+	- TreesFinance.allowance(address,address) (treesFinance.sol#116-118)
+multiTransfer(address[],uint256[]) should be declared external:
+	- TreesFinance.multiTransfer(address[],uint256[]) (treesFinance.sol#144-148)
+approve(address,uint256) should be declared external:
+	- TreesFinance.approve(address,uint256) (treesFinance.sol#150-155)
+transferFrom(address,address,uint256) should be declared external:
+	- TreesFinance.transferFrom(address,address,uint256) (treesFinance.sol#157-176)
+increaseAllowance(address,uint256) should be declared external:
+	- TreesFinance.increaseAllowance(address,uint256) (treesFinance.sol#178-183)
+decreaseAllowance(address,uint256) should be declared external:
+	- TreesFinance.decreaseAllowance(address,uint256) (treesFinance.sol#185-190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+
+* Function should be marked internal
+
+findPercent()
